@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 
-__version__ = '1.1'
 __author__ = 'Balazs Kocso'
+__version__ = '1.1'
 
 """ NoIPUpdater
 
@@ -14,6 +14,7 @@ import urllib
 import urllib2
 import logging
 import logging.handlers
+import socket
 
 logger = logging.getLogger("NoIPUpdater")
 
@@ -27,8 +28,9 @@ IP_IDENTIFIERS = [
 
 def main():
     iterator = iter(IP_IDENTIFIERS)
-    try :
-        while True:
+    current_ip = None
+    try:
+        while not current_ip:
             url = iterator.next()
             try:
                 f = urllib2.urlopen(url)
@@ -36,7 +38,7 @@ def main():
                 current_ip = response.strip()
                 logger.debug("Current IP is %s." % (current_ip))
                 break
-            except urllib2.URLError:
+            except (urllib2.URLError, socket.timeout):
                 pass
     except StopIteration:
         logger.warning("Couldn't get the current IP.")

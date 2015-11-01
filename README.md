@@ -20,9 +20,13 @@ Usage
 For general use
 ---------------
 
+Clone repository from GitHub:
+
+    git clone git@github.com:kocsob/noipupdater.git
+
 Place this in your cron file:
 
-    */15 * * * * /file/location/noipupdater.py --api_key api.key --hostname hostname
+    */15 * * * * python /file/location/noipupdater.py --api_key=api.key --hostname=hostname
 
 This will update your IP every fifteen minutes.
 

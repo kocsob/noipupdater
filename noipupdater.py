@@ -10,6 +10,7 @@ Python script which uses the no-ip.com API to update the IP.
 """
 
 import argparse
+import httplib
 import urllib
 import urllib2
 import logging
@@ -38,7 +39,7 @@ def main():
                 current_ip = response.strip()
                 logger.debug("Current IP is %s." % (current_ip))
                 break
-            except (urllib2.URLError, socket.timeout):
+            except (IOError, httplib.HTTPException, socket.error):
                 pass
     except StopIteration:
         logger.warning("Couldn't get the current IP.")
